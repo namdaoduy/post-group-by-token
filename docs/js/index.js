@@ -148,11 +148,16 @@ function filterGroup() {
 }
 
 function selectGroup(obj) {
-	if (document.querySelectorAll("#group-list tr[value='" + obj.id + "']").length == 0) {
+	if (document.querySelectorAll("#group-list tr[id='" + obj.id + "']").length == 0) {
 		var cont_group = document.getElementById("group-list");
 		cont_group.innerHTML += '<tr id="' + obj.id + '"><td class="gr-name">' + obj.innerHTML + 
-			'</td><td><input type="checkbox" checked></td><td>X</td></tr>';
+			'</td><td><input type="checkbox" checked></td><td><i class="fas fa-times" onclick="delGroup(this)"></i></td></tr>';
 	}
+}
+
+function delGroup(ele) {
+	var tr = ele.parentNode.parentNode;
+	tr.parentNode.removeChild(tr);
 }
 
 function getSelectedGroup() {
@@ -192,7 +197,7 @@ function loadSelectedGroupFromDB() {
 	var cont_group = document.getElementById("group-list");
 	for (let obj of selected_group_list) {
 		cont_group.innerHTML += '<tr id="' + obj.id + '"><td class="gr-name">' + obj.name + 
-			'</td><td><input type="checkbox" checked></td><td>X</td></tr>';
+			'</td><td><input type="checkbox" checked></td><td><i class="fas fa-times" onclick="delGroup(this)"></i></td></tr>';
 	}
 }
 
@@ -200,12 +205,17 @@ function execute() {
 	getCheckedGroup();
 	setPostID();
 	if (checked_group_list && id_post) {
+		saveSelectedGroupToDB();
+		var btn = document.getElementById("execute");
+		btn.setAttribute("onclick", "stop()");
+		btn.innerHTML = "Hủy";
+		btn.classList.add("red");
 		count = 0;
 		multipicsPost(checked_group_list[count].id);
 		count++;
 		interval = setInterval(function() {
 			if (!checked_group_list[count]) {
-				clearInterval(interval);
+				stop();
 				return;
 			}
 			multipicsPost(checked_group_list[count].id);
@@ -216,6 +226,10 @@ function execute() {
 
 function stop() {
 	clearInterval(interval);
+	var btn = document.getElementById("execute");
+	btn.setAttribute("onclick", "execute()");
+	btn.innerHTML = "Đăng bài";
+	btn.classList.remove("red");
 }
 
 function FBInitComplete() {

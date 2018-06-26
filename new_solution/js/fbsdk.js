@@ -6,12 +6,7 @@ window.fbAsyncInit = function() {
     version    : 'v3.0'
     });
 
-    FB.getLoginStatus(function(response){
-        FBInitComplete();
-    });
-    
-    FB.AppEvents.logPageView();   
-    
+    FB.AppEvents.logPageView();
 };
 
 (function(d, s, id){
