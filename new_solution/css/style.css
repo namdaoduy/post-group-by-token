@@ -43,6 +43,11 @@ header {
 	background-color: #4267b2;
 }
 
+header img {
+	height: 80%;
+	display: block;
+}
+
 section {
 	/*height: 80%;*/
 	background-color: #e9ebee;
@@ -91,6 +96,12 @@ button {
 	border-radius: 10px;
 	color: #fff;
 	background-color: #4267b2;
+	margin-bottom: 20px;
+}
+
+#sec-token h4 {
+	font-size: 20px;
+	color: #84ba10;
 }
 
 #sec-post {
@@ -146,7 +157,8 @@ button {
 }
 
 #selected-group {
-	width: 700px;
+	width: 80%;
+	max-width: 700px;
 	margin: auto;
 	margin-bottom: 50px;
 }
@@ -155,12 +167,16 @@ button {
 	height: 40px;
 }
 
-#selected-group th:nth-child(1) {
-	width: 600px;
+#selected-group th:nth-child(2) {
+	width: 40px;
 }
 
-#selected-group th:nth-child(2) {
-	width: 50px;
+#selected-group th:nth-child(3) {
+	width: 40px;
+}
+
+#selected-group td:nth-child(1) {
+	padding-left: 10px;
 }
 
 #selected-group td:nth-child(2) {

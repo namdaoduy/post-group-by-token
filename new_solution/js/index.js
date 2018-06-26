@@ -24,9 +24,23 @@ function loadAccessTokenFromDB() {
 }
 
 function btnAccessToken() {
-	if (saveAccessToken() != -1) {
-		location.href = "#sec-post";
-	}
+	FB.api("/me", {access_token: document.getElementById("access-token").value},
+		function(response) {
+			let hello = document.querySelector("#sec-token h4");
+			if (response.name) {
+				saveAccessToken();
+				hello.innerHTML = "Xin chào " + response.name + "!";
+				hello.setAttribute("style", "color: #84ba10;")
+				setTimeout(function() {
+					location.href = "#sec-post";
+				}, 2000);
+			}
+			else {
+				hello.innerHTML = "Access Token không đúng!";
+				hello.setAttribute("style", "color: #fc6b61;")
+			}
+		}
+	);
 }
 
 function multipicsPost(id_group) {
@@ -170,6 +184,14 @@ function delGroup(ele) {
 	tr.parentNode.removeChild(tr);
 }
 
+function checkAll(obj) {
+	var value = obj.checked;
+	var all = document.querySelectorAll("#selected-group input[type='checkbox']");
+	for (let item of all) {
+		item.checked = value;
+	}
+}
+
 function getSelectedGroup() {
 	var groups = document.querySelectorAll("#group-list tr");
 	selected_group_list = [];
@@ -215,6 +237,7 @@ function loadSelectedGroupFromDB() {
 function execute() {
 	getCheckedGroup();
 	setPostID();
+	document.querySelector("#sec-execute div:last-child").setAttribute("style", "display: block;");
 	if (checked_group_list && id_post) {
 		saveSelectedGroupToDB();
 		var btn = document.getElementById("execute");

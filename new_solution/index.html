@@ -14,14 +14,15 @@
 </head>
 <body>
 	<header>
-
+		<img src="img/logo.png">
 	</header>
 
 	<section id="sec-token">
 		<h2>STEP 1</h2>
 		<h3>Nhập mã truy cập</h3>
 		<input id="access-token" type="text" name="my_access_token" placeholder="access_token" autocomplete="on">
-		<button onclick="btnAccessToken()">Save</button>
+		<button onclick="btnAccessToken()">Check</button>
+		<h4></h4>
 	</section>
 
 	<section id="sec-post">
@@ -47,7 +48,7 @@
 			<thead>
 				<tr>
 					<th>Tên nhóm</th>
-					<th><input type="checkbox" checked></th>
+					<th><input type="checkbox" checked onchange="checkAll(this)"></th>
 					<th>Xóa</th>
 				</tr>
 			</thead>
@@ -67,10 +68,12 @@
 		
 		<button id="execute" onclick="execute()">Đăng bài</button>
 
-		<div id="cont-process">
+		<div style="display: none">
+			<div id="cont-process">
 			<div id="process"></div>
+			</div>
+			<textarea id="log"></textarea>
 		</div>
-		<textarea id="log"></textarea>
 	</section>
 	
 
