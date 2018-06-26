@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>eezzeeFacebook</title>
+</head>
+<body>
+	<section id="sec-token">
+		<label>Access Token: </label>
+		<input type="" name="" placeholder="access_token">
+		<button>Check</button>
+	</section>
+	<section id="sec-post">
+		<textarea name="" id="post-message" cols="30" rows="10"></textarea>
+    	<button onclick="">Post</button>
+	</section>
+
+	<section id="sec-pics">
+		<div class="pic-item">
+			<input type="file" onchange="previewFile()"><br>
+			<img class="pics" height="200" alt="Image preview...">
+		</div>
+		<div class="pic-item">
+			<input type="file" onchange="previewFile()"><br>
+			<img class="pics" height="200" alt="Image preview...">
+		</div>
+	</section>
+
+	<section id="test">
+		
+	</section>
+	
+
+
+
+    <script src="js/fbsdk.js">
+    </script>
+    <script>
+	function previewFile(){
+		var preview = document.querySelector('img'); //selects the query named img
+		var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+		var reader  = new FileReader();
+		reader.onloadend = function () {
+			preview.src = reader.result;
+		}
+		if (file) {
+			reader.readAsDataURL(file); //reads the data as a URL
+		} else {
+			preview.src = "";
+		}
+	}
+  </script>
+</body>
+</html>
