@@ -21,7 +21,7 @@
 		<h2>STEP 1</h2>
 		<h3>Nhập mã truy cập</h3>
 		<input id="access-token" type="text" name="my_access_token" placeholder="access_token" autocomplete="on">
-		<button onclick="saveAccessToken()">Save</button>
+		<button onclick="btnAccessToken()">Save</button>
 	</section>
 
 	<section id="sec-post">
@@ -60,11 +60,17 @@
 	<section id="sec-execute">
 		<h2>STEP 4</h2>
 		<h3>Đăng bài</h3>
+		<div id="div-delay">
+			<label>Delay</label>
+			<input id="delay" type="" name="" value="10"><label>s</label>
+		</div>
+		
 		<button id="execute" onclick="execute()">Đăng bài</button>
 
 		<div id="cont-process">
 			<div id="process"></div>
 		</div>
+		<textarea id="log"></textarea>
 	</section>
 	
 
