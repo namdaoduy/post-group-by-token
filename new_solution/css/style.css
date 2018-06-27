@@ -88,12 +88,18 @@ header a {
 	height: 100%;
 	width: 20%;
 	min-width: 120px;
+	max-width: 250px;
 	text-align: center;
 	padding: 25px 0;
 }
 
+header a:hover {
+	background-color: #313131;
+}
+
 header .active {
 	background-color: #243c6d;
+	font-weight: bold;
 }
 
 section {
