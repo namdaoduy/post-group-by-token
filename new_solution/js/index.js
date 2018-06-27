@@ -30,7 +30,10 @@ function btnAccessToken() {
 			if (response.name) {
 				saveAccessToken();
 				hello.innerHTML = "Xin chào " + response.name + "!";
-				hello.setAttribute("style", "color: #84ba10;")
+				hello.setAttribute("style", "color: #84ba10;");
+				document.querySelectorAll("section[id^='sec-']").forEach(function(obj) {
+					obj.classList.remove("hide");
+				});
 				setTimeout(function() {
 					location.href = "#sec-post";
 				}, 2000);
@@ -286,4 +289,8 @@ function timeNow() {
 		ss = '0' + ss;
 	result = hh + ':' + mm + ':' + ss;
 	return result;
+}
+
+function toggleDropdown(target) {
+	document.getElementById(target).classList.toggle("hide");
 }

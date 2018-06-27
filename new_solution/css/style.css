@@ -15,6 +15,11 @@ html, body {
 	scroll-behavior: smooth;
 }
 
+a {
+	color: #4267b2;
+	text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	width: fit-content;
@@ -30,12 +35,32 @@ h3 {
 	font-size: 20px;
 }
 
+h3 i {
+	cursor: pointer;
+	margin-left: 10px;
+	color: #979797;
+}
+
+h3 i:hover {
+	color: #2196f3;
+}
+
 table {
 	border: 1px solid;
+	background-color: #e1e1e1;
 }
 
 th, td {
 	border: 1px dotted;
+}
+
+th {
+	background-color: #4267b2;
+	color: #fff;
+}
+
+td {
+	background-color: #fff;
 }
 
 header {
@@ -43,9 +68,32 @@ header {
 	background-color: #4267b2;
 }
 
+header h1 {
+	height: 100%;
+    padding: 20px 0;
+    margin-left: 20px;
+    float: left;
+    color: #fff;
+}
+
 header img {
-	height: 80%;
+	height: 100%;
 	display: block;
+}
+
+header a {
+	color: #fff;
+	float: right;
+	display: block;
+	height: 100%;
+	width: 20%;
+	min-width: 120px;
+	text-align: center;
+	padding: 25px 0;
+}
+
+header .active {
+	background-color: #243c6d;
 }
 
 section {
@@ -54,15 +102,48 @@ section {
 	border-bottom: solid 0.5px #ccc;
 }
 
+section p {
+	width: 80%;
+    max-width: 600px;
+    margin: auto;
+    color: #8d8d8d;
+    margin-bottom: 30px;
+}
+
+footer {
+	height: 10%;
+	background-color: #4267b2;
+}
+
+footer div {
+	float: right;
+	color: #fff;
+	padding-top: 23px;
+	padding-right: 20px;
+}
+
+footer i {
+	color: #000;
+	font-size: 30px;
+	margin: 20px 0 0 20px;
+}
+
 button {
 	-webkit-transition: background-color 0.2s;
 	transition: background-color 0.2s;
 }
 
+button:hover {
+	cursor: pointer;
+}
 
+::selection {
+	background-color: #12afe0;
+    color: #fff;
+}
 
 #sec-token {
-	height: 90%;
+	min-height: 90%;
 }
 
 #sec-token h2 {
@@ -101,6 +182,7 @@ button {
 
 #sec-token h4 {
 	font-size: 20px;
+	margin-bottom: 30px;
 	color: #84ba10;
 }
 
@@ -188,6 +270,7 @@ button {
 	width: fit-content;
 	margin: auto;
 	font-size: 30px;
+	color: #d82e2e;
 }
 
 #sec-group div {
@@ -368,4 +451,36 @@ button:active {
 
 .red {
 	background-color: #fc6b61 !important;
+}
+
+.token-code {
+	-webkit-user-select: all;
+  	-moz-user-select: all;
+  	-ms-user-select: all;
+  	user-select: all;
+  	display: block;
+  	margin: auto;
+  	background-color: #fff;
+  	padding: 5px;
+  	width: 90%;
+    height: 36px;
+    border: 1px solid;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: monospace;
+    font-style: normal !important;
+    overflow: hidden;
+    word-break: break-all;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.token-code:hover, .token-code:focus, .token-code:focus-within {
+	height: fit-content;
+}
+
+@media (max-width: 767px) {
+	header h1 {
+		display: none;
+	}
 }

@@ -10,24 +10,45 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/fbsdk.js"></script>
     <script src="js/index.js"></script>
-    <title>eezzeeFacebook</title>
+    <title>Eezzee Facebook</title>
 </head>
 <body>
 	<header>
-		<img src="img/logo.png">
+		<img src="img/ezfb.png" style="margin: 0 0 0 20px; float: left" alt="" title="© 2018 namdaoduy">
+		<h1 title="© 2018 namdaoduy">Eezzee Facebook</h1>
+		<a href="" class="active" target="_blank" rel="noopener">Post Group</a>
+		<a href="autolike.html" target="_blank" rel="noopener">Auto like</a>
 	</header>
 
 	<section id="sec-token">
 		<h2>STEP 1</h2>
-		<h3>Nhập mã truy cập</h3>
+		<h3>Nhập mã truy cập<i class="far fa-question-circle" title="Xem hướng dẫn" onclick="toggleDropdown('p-token')"></i></h3>
+		<p id="p-token" class="hide">
+			Cách lấy mã truy cập (access token) của tài khoản facebook của bạn:<br><br>
+			1. Copy đoạn mã sau: <em class="token-code">!function(){if(window.location.hostname!="www.facebook.com")return;var source = document.getElementsByTagName('html')[0].innerHTML;var start = source.indexOf("access_token:\"EAAA",0)+14;var end = source.indexOf('"',start);var access_token = source.slice(start,end);if(access_token.indexOf("EAAA", 0)!=0)return;prompt("access token:",access_token);}()</em>
+			2. Vào <strong><a href="https://www.facebook.com/me" target="_blank" rel="noopener">trang cá nhân</a></strong> của bạn bằng máy tính<br><br>
+			3. Nhập vào ô địa chỉ như sau: <em class="token-code" style="height: fit-content">javascript:</em>
+			Sau đó dán đoạn mã vừa copy vào, thanh địa chỉ sẽ thành: <em class="token-code">javascript: !function(){if(window.location.hostname!="www.facebook.com")return;var source = document.getElementsByTagName('html')[0].innerHTML ...</em>
+			4. Nhấp Enter, một hộp thoại sẽ trả về mã truy cập có dạng "EAAA..."<br>
+			Copy đoạn mã đó và dán vào dưới đây.<br><br>
+			* Chú ý: mã truy cập chỉ cần nhập lần đầu tiên, lần sau sẽ tự động điền
+		</p>
 		<input id="access-token" type="text" name="my_access_token" placeholder="access_token" autocomplete="on">
 		<button onclick="btnAccessToken()">Check</button>
 		<h4></h4>
 	</section>
 
-	<section id="sec-post">
+	<section id="sec-post" class="hide">
 		<h2>STEP 2</h2>
-		<h3>Chọn bài đăng</h3>
+		<h3>Chọn bài đăng<i class="far fa-question-circle" title="Xem hướng dẫn" onclick="toggleDropdown('p-post')"></i></h3>
+		<p id="p-post" class="hide">
+			1. Đăng bài mẫu<br><br>
+			- Đăng một post làm mẫu lên <strong><a href="https://www.facebook.com/me" target="_blank" rel="noopener">trang cá nhân</a></strong> của bạn<br>
+			- Có thể để chế độ "Chỉ mình tôi" nếu muốn<br><br>
+			2. Nhấn nút <i class="fas fa-undo-alt" style="margin: 0 5px;"></i> để load lại danh sách post<br><br>
+			3. Chọn post mẫu, sau đó đến bước tiếp theo
+
+		</p>
 		<div>
 			<button onclick="getPostList()"><i class="fas fa-undo-alt"></i></button>
 			<select name="post" id="post-list" onchange="setPostID()"></select>
@@ -35,9 +56,15 @@
 		
 	</section>
 
-	<section id="sec-group">
+	<section id="sec-group" class="hide">
 		<h2>STEP 3</h2>
-		<h3>Chọn nhóm</h3>
+		<h3>Chọn nhóm<i class="far fa-question-circle" title="Xem hướng dẫn" onclick="toggleDropdown('p-group')"></i></h3>
+		<p id="p-group" class="hide">
+			1. Chọn ô "Thêm nhóm ..." để tìm kiếm và chọn các nhóm sẽ đăng bài<br><br>
+			2. Nhấn nút <i class="fas fa-undo-alt" style="margin: 0 5px;"></i> để load lại danh sách nhóm (nếu cần)<br><br>
+			3. Chọn <i class="fas fa-check" style="margin: 0 5px;"></i> vào những nhóm sẽ đăng<br><br>
+			4. Sau khi đã tích xong, chuyển tới bước cuối cùng
+		</p>
 		<div>
 			<button onclick="getGroupList()"><i class="fas fa-undo-alt"></i></button>
 			<input type="text" id="search-bar" onkeyup="filterGroup()" placeholder="Thêm nhóm ...">
@@ -58,9 +85,14 @@
 	</section>
 
 
-	<section id="sec-execute">
+	<section id="sec-execute" class="hide">
 		<h2>STEP 4</h2>
-		<h3>Đăng bài</h3>
+		<h3>Đăng bài<i class="far fa-question-circle" title="Xem hướng dẫn" onclick="toggleDropdown('p-execute')"></i></h3>
+		<p id="p-execute" class="hide">
+			1. Chọn thời gian chờ giữa 2 lần đăng bài liên tiếp (tránh bị báo spam)<br><br>
+			2. Nhấn nút <strong><span style="color: #4267b2">Đăng bài</span></strong><br><br>
+			3. Nhấn nút <strong><span style="color: #fc6b61">Hủy</span></strong> nếu muốn dừng lại (không thể thu hồi các post đã đăng)
+		</p>
 		<div id="div-delay">
 			<label>Delay</label>
 			<input id="delay" type="" name="" value="10"><label>s</label>
@@ -76,7 +108,10 @@
 		</div>
 	</section>
 	
-
+	<footer>
+		<a href="https://github.com/namdaoduy" title="My GitHub" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+		<div title="My works. Don't copy pliz!">© 2018 namdaoduy</div>
+	</footer>
     <script type="text/javascript" src="js/call.js"></script>
 </body>
 </html>

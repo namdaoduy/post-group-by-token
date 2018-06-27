@@ -11,6 +11,7 @@ function saveAccessToken() {
 	var t = document.getElementById("access-token").value;
 	if (t.indexOf("EAAA", 0) < 0) {
 		console.log("Wrong access token");
+		return -1;
 	}
 	else {
 		localStorage.setItem("access_token", t);
@@ -22,11 +23,36 @@ function loadAccessTokenFromDB() {
 	token = localStorage.getItem("access_token");
 }
 
+function btnAccessToken() {
+	FB.api("/me", {access_token: document.getElementById("access-token").value},
+		function(response) {
+			let hello = document.querySelector("#sec-token h4");
+			if (response.name) {
+				saveAccessToken();
+				hello.innerHTML = "Xin chào " + response.name + "!";
+				hello.setAttribute("style", "color: #84ba10;");
+				document.querySelectorAll("section[id^='sec-']").forEach(function(obj) {
+					obj.classList.remove("hide");
+				});
+				setTimeout(function() {
+					location.href = "#sec-post";
+				}, 2000);
+			}
+			else {
+				hello.innerHTML = "Access Token không đúng!";
+				hello.setAttribute("style", "color: #fc6b61;")
+			}
+		}
+	);
+}
+
 function multipicsPost(id_group) {
 	var arr = new Array();
 	var pics = new Array();
 	var mess = "";
 	var priv = {"value" : "SELF"};
+
+	log('Đang post lên group ' + id_group + ' ...');
 
 	FB.api("/" + id_post, {access_token: token},
 	    function(response) {
@@ -79,6 +105,7 @@ function multipicsPost(id_group) {
 			    },
 			    function(response) {
 			        console.log(response);
+			        log('Post thành công lên group ' + id_group + ' !');
 			        if (id_group == "me") {
 			        	FB.api("/" + response.id , "POST",
 						    {
@@ -160,6 +187,14 @@ function delGroup(ele) {
 	tr.parentNode.removeChild(tr);
 }
 
+function checkAll(obj) {
+	var value = obj.checked;
+	var all = document.querySelectorAll("#selected-group input[type='checkbox']");
+	for (let item of all) {
+		item.checked = value;
+	}
+}
+
 function getSelectedGroup() {
 	var groups = document.querySelectorAll("#group-list tr");
 	selected_group_list = [];
@@ -189,6 +224,7 @@ function getCheckedGroup() {
 }
 
 function saveSelectedGroupToDB() {
+	getSelectedGroup();
 	localStorage.setItem("selected_group_list", JSON.stringify(selected_group_list));
 }
 
@@ -204,9 +240,11 @@ function loadSelectedGroupFromDB() {
 function execute() {
 	getCheckedGroup();
 	setPostID();
+	document.querySelector("#sec-execute div:last-child").setAttribute("style", "display: block;");
 	if (checked_group_list && id_post) {
 		saveSelectedGroupToDB();
 		var btn = document.getElementById("execute");
+		var delay = document.getElementById("delay").value * 1000;
 		btn.setAttribute("onclick", "stop()");
 		btn.innerHTML = "Hủy";
 		btn.classList.add("red");
@@ -214,13 +252,13 @@ function execute() {
 		multipicsPost(checked_group_list[count].id);
 		count++;
 		interval = setInterval(function() {
+			multipicsPost(checked_group_list[count].id);
+			count++;
 			if (!checked_group_list[count]) {
 				stop();
 				return;
 			}
-			multipicsPost(checked_group_list[count].id);
-			count++;
-		}, 10000);
+		}, delay);
 	}
 }
 
@@ -232,7 +270,27 @@ function stop() {
 	btn.classList.remove("red");
 }
 
-function FBInitComplete() {
-	setPostID();
-	getGroupList();
+function log(text) {
+	var text_area = document.getElementById("log");
+	text_area.innerHTML += timeNow() + ": " + text + "\n";
+}
+
+function timeNow() {
+	var date = new Date();
+	var result;
+	hh = '' + date.getHours();
+	mm = '' + date.getMinutes();
+	ss = '' + date.getSeconds();
+	if (hh.length == 1)
+		hh = '0' + hh;
+	if (mm.length == 1)
+		mm = '0' + mm;
+	if (ss.length == 1)
+		ss = '0' + ss;
+	result = hh + ':' + mm + ':' + ss;
+	return result;
+}
+
+function toggleDropdown(target) {
+	document.getElementById(target).classList.toggle("hide");
 }
