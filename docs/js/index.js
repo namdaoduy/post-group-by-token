@@ -5,7 +5,8 @@ var selected_group_list = [];
 var checked_group_list = [];
 var all_group_list = [];
 var count;
-var interval;
+//var interval;
+var timeout = [];
 
 function saveAccessToken() {
 	var t = document.getElementById("access-token").value;
@@ -244,26 +245,39 @@ function execute() {
 	if (checked_group_list && id_post) {
 		saveSelectedGroupToDB();
 		var btn = document.getElementById("execute");
-		var delay = document.getElementById("delay").value * 1000;
+		var delay = document.getElementById("delay").value;
+		var process_bar = document.getElementById("process");
+		var process_time = document.querySelector("#process + span");
 		btn.setAttribute("onclick", "stop()");
 		btn.innerHTML = "Hủy";
 		btn.classList.add("red");
 		count = 0;
-		multipicsPost(checked_group_list[count].id);
-		count++;
-		interval = setInterval(function() {
-			multipicsPost(checked_group_list[count].id);
-			count++;
+		var time;
+		(loop = function() {
 			if (!checked_group_list[count]) {
 				stop();
 				return;
 			}
-		}, delay);
+			multipicsPost(checked_group_list[count].id);
+			count++;
+			time = delay;
+			timeout.push(setTimeout(loop, delay*1000)); 
+		})();
+		(proc = function() {
+			time--;
+			let width = Math.round(((delay - time)/delay)*100); 
+			process_bar.setAttribute("style", "width:" + width + "%");
+			process_time.innerHTML = time + " giây";
+			timeout.push(setTimeout(proc, 1000));
+		})();
 	}
 }
 
 function stop() {
-	clearInterval(interval);
+	for (let obj of timeout) {
+		clearTimeout(obj);
+	}
+	timeout = [];
 	var btn = document.getElementById("execute");
 	btn.setAttribute("onclick", "execute()");
 	btn.innerHTML = "Đăng bài";
@@ -293,4 +307,8 @@ function timeNow() {
 
 function toggleDropdown(target) {
 	document.getElementById(target).classList.toggle("hide");
+}
+
+function processBar() {
+
 }
